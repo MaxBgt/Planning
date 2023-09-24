@@ -1,48 +1,89 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  where
+} from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
-      // Import the functions you need from the SDKs you need
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-      import {
-        getFirestore,
-        collection,
-        doc,
-        addDoc,
-      } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+// Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyBHf-fLr49rPoxm8s7n7m-fgZ4KbadwuIM",
+    authDomain: "planning-menage.firebaseapp.com",
+    databaseURL: "https://planning-menage-default-rtdb.firebaseio.com",
+    projectId: "planning-menage",
+    storageBucket: "planning-menage.appspot.com",
+    messagingSenderId: "637158622727",
+    appId: "1:637158622727:web:b856e03a6989b643258ca2",
+    measurementId: "G-JWWNWZJLSD",
+  };
 
-      // Your web app's Firebase configuration
-      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-      const firebaseConfig = {
-        apiKey: "AIzaSyBHf-fLr49rPoxm8s7n7m-fgZ4KbadwuIM",
-        authDomain: "planning-menage.firebaseapp.com",
-        databaseURL: "https://planning-menage-default-rtdb.firebaseio.com",
-        projectId: "planning-menage",
-        storageBucket: "planning-menage.appspot.com",
-        messagingSenderId: "637158622727",
-        appId: "1:637158622727:web:b856e03a6989b643258ca2",
-        measurementId: "G-JWWNWZJLSD",
-      };
-      // Initialize Firebase
-      const app = initializeApp(firebaseConfig);
-      const db = getFirestore(app);
-      //Firestore connection
-      const database = getFirestore();
- 
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
+// Function to save data to Firestore
+async function saveData(key, value) {
+  try {
+    const docRef = await addDoc(collection(db, "taches"), {
+      key: key,
+      value: value
+    });
+    console.log("Document written with ID: ", docRef.id);
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+}
 
-// Sélectionnez tous les éléments <select> dans le tableau
+// Function to load data from Firestore
+async function loadData(key) {
+  const q = query(collection(db, "taches"), where("key", "==", key));
+  const querySnapshot = await getDocs(q);
+  let value = null;
+  querySnapshot.forEach((doc) => {
+    value = doc.data().value;
+  });
+  return value;
+}
+
+// Function to load the initial state of cells from Firestore
+async function loadInitialState() {
+  const q = query(collection(db, "taches"));
+  const querySnapshot = await getDocs(q);
+
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
+    const key = data.key;
+    const value = data.value;
+
+    const select = document.getElementById(key);
+    if (select) {
+      const cell = select.parentElement;
+      const p = cell.querySelector('p');
+
+      select.value = value;
+      select.style.display = 'none';
+      p.textContent = value;
+      p.style.display = 'block';
+      cell.style.backgroundColor = '#32CD32';
+    }
+  });
+}
+
+// Your existing code to handle change and validation events
 const selects = document.querySelectorAll('select');
 
-// Ajoutez un écouteur d'événements à chaque élément <select>
 selects.forEach(select => {
   select.addEventListener('change', function() {
-    // Trouvez les éléments associés
     const p = document.getElementById(`${this.id}-text`);
     const validateBtn = this.nextElementSibling.nextElementSibling;
     const cancelBtn = validateBtn.nextElementSibling;
 
-    // Mettez à jour le contenu de l'élément <p>
     p.textContent = this.options[this.selectedIndex].text;
 
-    // Cachez l'élément <select> et affichez les boutons et le <p>
     this.style.display = 'none';
     p.style.display = 'inline';
     validateBtn.style.display = 'inline';
@@ -50,13 +91,11 @@ selects.forEach(select => {
   });
 });
 
-// Ajoutez des écouteurs pour les boutons "Annuler" et "Valider"
 document.querySelectorAll('.cancel').forEach(btn => {
   btn.addEventListener('click', function() {
     const select = this.previousElementSibling.previousElementSibling.previousElementSibling;
     const p = select.nextElementSibling;
 
-    // Réinitialisez l'élément <select> et cachez le <p> et les boutons
     select.style.display = 'inline';
     select.selectedIndex = 0; 
     p.style.display = 'none';
@@ -67,93 +106,65 @@ document.querySelectorAll('.cancel').forEach(btn => {
 });
 
 document.querySelectorAll('.validate').forEach(btn => {
-  btn.addEventListener('click', function() {
+  btn.addEventListener('click', async function() {
     const td = this.parentElement;
     const cell = this.parentElement;
     const select = cell.querySelector('select');
     const selectedValue = select.value;
     const key = select.id;
 
-    // Sauvegarder la valeur dans localStorage
-    saveData(key, selectedValue);
+    await saveData(key, selectedValue);
 
-    // Changer le fond en vert
     cell.style.backgroundColor = 'green';
-
-    // Cacher le select et afficher le texte
     select.style.display = 'none';
     const p = cell.querySelector('p');
     p.textContent = selectedValue;
     p.style.display = 'block';
-
-    // Changez le fond en vert
     td.style.backgroundColor = '#32CD32';
 
-
-    // Cachez les boutons
     this.style.display = 'none';
     this.nextElementSibling.style.display = 'none';
   });
 });
 
-function getNextSunday() {
-    const today = new Date();
-    const nextSunday = new Date();
-    nextSunday.setDate(today.getDate() + (7 - today.getDay()));
-    return nextSunday;
-  }
-
-  async function saveData(key, value) {
-    try {
-      const docRef = await addDoc(collection(db, "taches"), {
-        key: key,
-        value: value
-      });
-      console.log("Document written with ID: ", docRef.id);
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
-  }
-
-  async function loadData(key) {
-    const q = query(collection(db, "taches"), where("key", "==", key));
-    const querySnapshot = await getDocs(q);
-    let value = null;
-    querySnapshot.forEach((doc) => {
-      value = doc.data().value;
-    });
-    return value;
-  }
-  // Fonction pour charger l'état initial des cellules à partir de localStorage
-
-  function loadInitialState() {
- 
-  }
-  
-  
-  // Charger l'état initial lorsque la page est chargée
-  window.addEventListener('DOMContentLoaded', (event) => {
-    loadInitialState();
-  });
-  
-  
-
-
-// Fonction pour vérifier si aujourd'hui est dimanche
-const nextSunday = new Date();
-nextSunday.setDate(nextSunday.getDate() + (7 - nextSunday.getDay()));
-function isAfterNextSunday() {
-    const today = new Date();
-    return today >= nextSunday;
-  }
 function isSunday() {
-    const today = new Date();
-    return today.getDay() === 0;  // 0 correspond à dimanche
+  const today = new Date();
+  return today.getDay() === 0;
+}
+
+async function clearSundayTasks() {
+  if (isSunday()) {
+    const q = query(collection(db, "taches"));
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach(async (doc) => {
+      const data = doc.data();
+      const key = data.key;
+
+      // Supprimer de Firestore
+      await deleteDoc(doc(db, "taches", doc.id));
+
+      // Réinitialiser le DOM
+      const select = document.getElementById(key);
+      if (select) {
+        const cell = select.parentElement;
+        cell.style.backgroundColor = '';  // Réinitialiser le fond
+        const p = cell.querySelector('p');
+        p.style.display = 'none';  // Cacher le texte
+        p.textContent = '';  // Réinitialiser le texte
+        select.style.display = 'block';  // Afficher le select
+        select.selectedIndex = 0;  // Réinitialiser le select
+      }
+    });
   }
-  
-  // Fonction pour vider les données du dimanche
-  function clearSundayTasks() {
-   
-  }
+}
+
+
+setInterval(clearSundayTasks, 60 * 1000);
+
+window.addEventListener('DOMContentLoaded', (event) => {
+  loadInitialState();
+});
 
   
+
