@@ -1,31 +1,36 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Tableau des jours de la semaine et prénoms</title>
     <style>
       body {
         display: flex;
         justify-content: center;
-        flex-direction: column;
         align-items: center;
+        flex-direction: column;
         height: 100vh;
-        overflow: hidden;
+        margin: 0;
       }
-
-      h1 {
-        margin-top: 150px;
+      .styled-table {
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 0.9em;
+        font-family: sans-serif;
+        min-width: 400px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
       }
-
-      table {
-        width: 100%;
-        height: 50%;
-      }
-
-      th,
-      td {
-        text-align: center;
+      .prenom {
+        font-size: 10px;
         padding: 10px;
-        word-break: break-word;
+      }
+      .day {
+        padding: 10px;
+      }
+      ul {
+        margin: 0;
+        padding: 20px;
+      }
+      li {
+        font-size: 10px;
       }
       @media (min-width: 768px) {
         table {
@@ -38,28 +43,29 @@
         }
       }
     </style>
+    <title>Tableau des jours de la semaine et prénoms</title>
   </head>
   <body>
-    <h1>Planning ménage</h1>
-    <table border="1">
+    <h3>Planning ménage</h3>
+    <table border="1" class="styled-table">
       <!-- En-tête du tableau -->
       <thead>
         <tr>
           <th></th>
-          <th>Lundi</th>
-          <th>Mardi</th>
-          <th>Mercredi</th>
-          <th>Jeudi</th>
-          <th>Vendredi</th>
-          <th>Samedi</th>
-          <th>Dimanche</th>
+          <th class="day">Lundi</th>
+          <th class="day">Mardi</th>
+          <th class="day">Mercredi</th>
+          <th class="day">Jeudi</th>
+          <th class="day">Vendredi</th>
+          <th class="day">Samedi</th>
+          <th class="day">Dimanche</th>
         </tr>
       </thead>
 
       <!-- Corps du tableau -->
       <tbody>
         <tr>
-          <td>Maxime</td>
+          <td class="prenom">Maxime</td>
           <td></td>
           <td></td>
           <td></td>
@@ -69,7 +75,7 @@
           <td></td>
         </tr>
         <tr>
-          <td>Léa</td>
+          <td class="prenom">Léa</td>
           <td></td>
           <td></td>
           <td></td>
@@ -79,7 +85,7 @@
           <td></td>
         </tr>
         <tr>
-          <td>Ninon</td>
+          <td class="prenom">Ninon</td>
           <td></td>
           <td></td>
           <td></td>
