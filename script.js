@@ -66,8 +66,15 @@ document.querySelectorAll('.validate').forEach(btn => {
   });
 });
 
+function getNextSunday() {
+    const today = new Date();
+    const nextSunday = new Date();
+    nextSunday.setDate(today.getDate() + (7 - today.getDay()));
+    return nextSunday;
+  }
+
 const saveData = (key, value) => {
-    const expirationDate = new Date().getTime() + (10 * 1000)
+    const expirationDate = nextSunday.getTime();
     const data = {value, expirationDate}
     localStorage.setItem(key, JSON.stringify(data))
 }
@@ -144,4 +151,4 @@ function isSunday() {
   // Vérifier toutes les minutes
   setInterval(clearSundayTasks, 60 * 1000);
 
-
+console.log(Date(1695569432152));
