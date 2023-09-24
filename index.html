@@ -15,15 +15,17 @@
         margin: 25px 0;
         font-size: 0.9em;
         font-family: sans-serif;
-        min-width: 400px;
+        width: 90%;
+        height: 70%;
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
       }
       .prenom {
-        font-size: 10px;
-        padding: 10px;
+        font-size: 25px;
+        padding: 0px;
       }
       .day {
         padding: 10px;
+        font-size: 25px;
       }
       ul {
         margin: 0;
@@ -32,21 +34,77 @@
       li {
         font-size: 10px;
       }
-      @media (min-width: 768px) {
-        table {
-          width: 80%;
-        }
+      td {
+        text-align: center;
+        padding-top: 10px;
+      }
+      select {
+        font-size: 20px;
+        width: 100%;
+      }
+      .cancel,
+      .validate {
+        border: none;
+        background: transparent;
+      }
+      .validate,
+      .cancel {
+        cursor: pointer;
+      }
+      .validate-icon {
+        color: green;
+        border: 1px solid green;
+        font-size: 25px;
+        padding: 5px;
+        border-radius: 5px;
+      }
+      .cancel-icon {
+        color: red;
+        border: 1px solid red;
+        font-size: 10px;
+        padding: 5px;
+        border-radius: 5px;
+        font-size: 25px;
+      }
+      p {
+        font-size: 35px;
+      }
 
+      @media (max-width: 767px) {
+        .styled-table {
+          max-width: 90%;
+          height: auto;
+        }
+        .prenom,
+        .day {
+          font-size: 20px;
+          padding: 5px;
+        }
+        select {
+          font-size: 18px;
+          width: 100%;
+        }
+        .validate-icon,
+        .cancel-icon {
+          font-size: 20px;
+        }
+        p {
+          font-size: 20px;
+        }
         th,
         td {
-          padding: 10px;
+          padding: 5px;
         }
       }
     </style>
+    <script
+      src="https://kit.fontawesome.com/3a7bc93fb4.js"
+      crossorigin="anonymous"
+    ></script>
     <title>Tableau des jours de la semaine et prénoms</title>
   </head>
   <body>
-    <h3>Planning ménage</h3>
+    <h1>Planning ménage</h1>
     <table border="1" class="styled-table">
       <!-- En-tête du tableau -->
       <thead>
@@ -66,35 +124,334 @@
       <tbody>
         <tr>
           <td class="prenom">Maxime</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td class="select-container">
+            <select id="maxime-lundi" name="maxime-lundi">
+              <option value=""></option>
+              <option value="aspirateur">Aspirateur</option>
+              <option value="balai">Balai</option>
+              <option value="serpillère">Serpillère</option>
+            </select>
+            <p id="maxime-lundi-text"></p>
+            <button class="validate" style="display: none">
+              <i class="fa-solid fa-check validate-icon"></i>
+            </button>
+            <button class="cancel" style="display: none">
+              <i class="fa-solid fa-xmark cancel-icon"></i>
+            </button>
+          </td>
+          <td class="select-container">
+            <select id="maxime-mardi" name="maxime-mardi">
+              <option value=""></option>
+              <option value="aspirateur">Aspirateur</option>
+              <option value="balai">Balai</option>
+              <option value="serpillère">Serpillère</option>
+            </select>
+            <p id="maxime-mardi-text"></p>
+            <button class="validate" style="display: none">
+              <i class="fa-solid fa-check validate-icon"></i>
+            </button>
+            <button class="cancel" style="display: none">
+              <i class="fa-solid fa-xmark cancel-icon"></i>
+            </button>
+          </td>
+          <td class="select-container">
+            <select id="maxime-mercredi" name="maxime-mercredi">
+              <option value=""></option>
+              <option value="aspirateur">Aspirateur</option>
+              <option value="balai">Balai</option>
+              <option value="serpillère">Serpillère</option>
+            </select>
+            <p id="maxime-mercredi-text"></p>
+            <button class="validate" style="display: none">
+              <i class="fa-solid fa-check validate-icon"></i>
+            </button>
+            <button class="cancel" style="display: none">
+              <i class="fa-solid fa-xmark cancel-icon"></i>
+            </button>
+          </td>
+          <td class="select-container">
+            <select id="maxime-jeudi" name="maxime-jeudi">
+              <option value=""></option>
+              <option value="aspirateur">Aspirateur</option>
+              <option value="balai">Balai</option>
+              <option value="serpillère">Serpillère</option>
+            </select>
+            <p id="maxime-jeudi-text"></p>
+            <button class="validate" style="display: none">
+              <i class="fa-solid fa-check validate-icon"></i>
+            </button>
+            <button class="cancel" style="display: none">
+              <i class="fa-solid fa-xmark cancel-icon"></i>
+            </button>
+          </td>
+          <td class="select-container">
+            <select id="maxime-vendredi" name="maxime-vendredi">
+              <option value=""></option>
+              <option value="aspirateur">Aspirateur</option>
+              <option value="balai">Balai</option>
+              <option value="serpillère">Serpillère</option>
+            </select>
+            <p id="maxime-vendredi-text"></p>
+            <button class="validate" style="display: none">
+              <i class="fa-solid fa-check validate-icon"></i>
+            </button>
+            <button class="cancel" style="display: none">
+              <i class="fa-solid fa-xmark cancel-icon"></i>
+            </button>
+          </td>
+          <td class="select-container">
+            <select id="maxime-samedi" name="maxime-samedi">
+              <option value=""></option>
+              <option value="aspirateur">Aspirateur</option>
+              <option value="balai">Balai</option>
+              <option value="serpillère">Serpillère</option>
+            </select>
+            <p id="maxime-samedi-text"></p>
+            <button class="validate" style="display: none">
+              <i class="fa-solid fa-check validate-icon"></i>
+            </button>
+            <button class="cancel" style="display: none">
+              <i class="fa-solid fa-xmark cancel-icon"></i>
+            </button>
+          </td>
+          <td class="select-container">
+            <select id="maxime-dimanche" name="maxime-dimanche">
+              <option value=""></option>
+              <option value="aspirateur">Aspirateur</option>
+              <option value="balai">Balai</option>
+              <option value="serpillère">Serpillère</option>
+            </select>
+            <p id="maxime-dimanche-text"></p>
+            <button class="validate" style="display: none">
+              <i class="fa-solid fa-check validate-icon"></i>
+            </button>
+            <button class="cancel" style="display: none">
+              <i class="fa-solid fa-xmark cancel-icon"></i>
+            </button>
+          </td>
         </tr>
+        <tr></tr>
         <tr>
           <td class="prenom">Léa</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td class="select-element">
+            <select id="lea-lundi" name="lea-lundi">
+              <option value=""></option>
+              <option value="aspirateur">Aspirateur</option>
+              <option value="balai">Balai</option>
+              <option value="serpillère">Serpillère</option>
+            </select>
+            <p id="lea-lundi-text"></p>
+            <button class="validate" style="display: none">
+              <i class="fa-solid fa-check validate-icon"></i>
+            </button>
+            <button class="cancel" style="display: none">
+              <i class="fa-solid fa-xmark cancel-icon"></i>
+            </button>
+          </td>
+          <td class="select-container">
+            <select id="lea-mardi" name="lea-mardi">
+              <option value=""></option>
+              <option value="aspirateur">Aspirateur</option>
+              <option value="balai">Balai</option>
+              <option value="serpillère">Serpillère</option>
+            </select>
+            <p id="lea-mardi-text"></p>
+            <button class="validate" style="display: none">
+              <i class="fa-solid fa-check validate-icon"></i>
+            </button>
+            <button class="cancel" style="display: none">
+              <i class="fa-solid fa-xmark cancel-icon"></i>
+            </button>
+          </td>
+          <td class="select-container">
+            <select id="lea-mercredi" name="lea-mercredi">
+              <option value=""></option>
+              <option value="aspirateur">Aspirateur</option>
+              <option value="balai">Balai</option>
+              <option value="serpillère">Serpillère</option>
+            </select>
+            <p id="lea-mercredi-text"></p>
+            <button class="validate" style="display: none">
+              <i class="fa-solid fa-check validate-icon"></i>
+            </button>
+            <button class="cancel" style="display: none">
+              <i class="fa-solid fa-xmark cancel-icon"></i>
+            </button>
+          </td>
+          <td class="select-container">
+            <select id="lea-jeudi" name="lea-jeudi">
+              <option value=""></option>
+              <option value="aspirateur">Aspirateur</option>
+              <option value="balai">Balai</option>
+              <option value="serpillère">Serpillère</option>
+            </select>
+            <p id="lea-jeudi-text"></p>
+            <button class="validate" style="display: none">
+              <i class="fa-solid fa-check validate-icon"></i>
+            </button>
+            <button class="cancel" style="display: none">
+              <i class="fa-solid fa-xmark cancel-icon"></i>
+            </button>
+          </td>
+          <td class="select-container">
+            <select id="lea-vendredi" name="lea-vendredi">
+              <option value=""></option>
+              <option value="aspirateur">Aspirateur</option>
+              <option value="balai">Balai</option>
+              <option value="serpillère">Serpillère</option>
+            </select>
+            <p id="lea-vendredi-text"></p>
+            <button class="validate" style="display: none">
+              <i class="fa-solid fa-check validate-icon"></i>
+            </button>
+            <button class="cancel" style="display: none">
+              <i class="fa-solid fa-xmark cancel-icon"></i>
+            </button>
+          </td>
+          <td class="select-container">
+            <select id="lea-samedi" name="lea-samedi">
+              <option value=""></option>
+              <option value="aspirateur">Aspirateur</option>
+              <option value="balai">Balai</option>
+              <option value="serpillère">Serpillère</option>
+            </select>
+            <p id="lea-samedi-text"></p>
+            <button class="validate" style="display: none">
+              <i class="fa-solid fa-check validate-icon"></i>
+            </button>
+            <button class="cancel" style="display: none">
+              <i class="fa-solid fa-xmark cancel-icon"></i>
+            </button>
+          </td>
+          <td class="select-container">
+            <select id="lea-dimanche" name="lea-dimanche">
+              <option value=""></option>
+              <option value="aspirateur">Aspirateur</option>
+              <option value="balai">Balai</option>
+              <option value="serpillère">Serpillère</option>
+            </select>
+            <p id="lea-dimanche-text"></p>
+            <button class="validate" style="display: none">
+              <i class="fa-solid fa-check validate-icon"></i>
+            </button>
+            <button class="cancel" style="display: none">
+              <i class="fa-solid fa-xmark cancel-icon"></i>
+            </button>
+          </td>
         </tr>
+        <tr></tr>
+        <tr></tr>
         <tr>
           <td class="prenom">Ninon</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td class="select-element">
+            <select id="ninon-lundi" name="ninon-lundi">
+              <option value=""></option>
+              <option value="aspirateur">Aspirateur</option>
+              <option value="balai">Balai</option>
+              <option value="serpillère">Serpillère</option>
+            </select>
+            <p id="ninon-lundi-text"></p>
+            <button class="validate" style="display: none">
+              <i class="fa-solid fa-check validate-icon"></i>
+            </button>
+            <button class="cancel" style="display: none">
+              <i class="fa-solid fa-xmark cancel-icon"></i>
+            </button>
+          </td>
+          <td class="select-container">
+            <select id="ninon-mardi" name="ninon-mardi">
+              <option value=""></option>
+              <option value="aspirateur">Aspirateur</option>
+              <option value="balai">Balai</option>
+              <option value="serpillère">Serpillère</option>
+            </select>
+            <p id="ninon-mardi-text"></p>
+            <button class="validate" style="display: none">
+              <i class="fa-solid fa-check validate-icon"></i>
+            </button>
+            <button class="cancel" style="display: none">
+              <i class="fa-solid fa-xmark cancel-icon"></i>
+            </button>
+          </td>
+          <td class="select-container">
+            <select id="ninon-mercredi" name="ninon-mercredi">
+              <option value=""></option>
+              <option value="aspirateur">Aspirateur</option>
+              <option value="balai">Balai</option>
+              <option value="serpillère">Serpillère</option>
+            </select>
+            <p id="ninon-mercredi-text"></p>
+            <button class="validate" style="display: none">
+              <i class="fa-solid fa-check validate-icon"></i>
+            </button>
+            <button class="cancel" style="display: none">
+              <i class="fa-solid fa-xmark cancel-icon"></i>
+            </button>
+          </td>
+          <td class="select-container">
+            <select id="ninon-jeudi" name="ninon-jeudi">
+              <option value=""></option>
+              <option value="aspirateur">Aspirateur</option>
+              <option value="balai">Balai</option>
+              <option value="serpillère">Serpillère</option>
+            </select>
+            <p id="ninon-jeudi-text"></p>
+            <button class="validate" style="display: none">
+              <i class="fa-solid fa-check validate-icon"></i>
+            </button>
+            <button class="cancel" style="display: none">
+              <i class="fa-solid fa-xmark cancel-icon"></i>
+            </button>
+          </td>
+          <td class="select-container">
+            <select id="ninon-vendredi" name="ninon-vendredi">
+              <option value=""></option>
+              <option value="aspirateur">Aspirateur</option>
+              <option value="balai">Balai</option>
+              <option value="serpillère">Serpillère</option>
+            </select>
+            <p id="ninon-vendredi-text"></p>
+            <button class="validate" style="display: none">
+              <i class="fa-solid fa-check validate-icon"></i>
+            </button>
+            <button class="cancel" style="display: none">
+              <i class="fa-solid fa-xmark cancel-icon"></i>
+            </button>
+          </td>
+          <td class="select-container">
+            <select id="ninon-samedi" name="ninon-samedi">
+              <option value=""></option>
+              <option value="aspirateur">Aspirateur</option>
+              <option value="balai">Balai</option>
+              <option value="serpillère">Serpillère</option>
+            </select>
+            <p id="ninon-samedi-text"></p>
+            <button class="validate" style="display: none">
+              <i class="fa-solid fa-check validate-icon"></i>
+            </button>
+            <button class="cancel" style="display: none">
+              <i class="fa-solid fa-xmark cancel-icon"></i>
+            </button>
+          </td>
+          <td class="select-container">
+            <select id="ninon-dimanche" name="ninon-dimanche">
+              <option value=""></option>
+              <option value="aspirateur">Aspirateur</option>
+              <option value="balai">Balai</option>
+              <option value="serpillère">Serpillère</option>
+            </select>
+            <p id="ninon-dimanche-text"></p>
+            <button class="validate" style="display: none">
+              <i class="fa-solid fa-check validate-icon"></i>
+            </button>
+            <button class="cancel" style="display: none">
+              <i class="fa-solid fa-xmark cancel-icon"></i>
+            </button>
+          </td>
         </tr>
+        <tr></tr>
       </tbody>
     </table>
+    <script src="./script.js"></script>
   </body>
 </html>
