@@ -1,3 +1,33 @@
+
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+      import {
+        getFirestore,
+        collection,
+        doc,
+        addDoc,
+      } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyBHf-fLr49rPoxm8s7n7m-fgZ4KbadwuIM",
+        authDomain: "planning-menage.firebaseapp.com",
+        databaseURL: "https://planning-menage-default-rtdb.firebaseio.com",
+        projectId: "planning-menage",
+        storageBucket: "planning-menage.appspot.com",
+        messagingSenderId: "637158622727",
+        appId: "1:637158622727:web:b856e03a6989b643258ca2",
+        measurementId: "G-JWWNWZJLSD",
+      };
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+      //Firestore connection
+      const database = getFirestore();
+ 
+
+
 // Sélectionnez tous les éléments <select> dans le tableau
 const selects = document.querySelectorAll('select');
 
@@ -73,43 +103,33 @@ function getNextSunday() {
     return nextSunday;
   }
 
-const saveData = (key, value) => {
-    const expirationDate = nextSunday.getTime();
-    const data = {value, expirationDate}
-    localStorage.setItem(key, JSON.stringify(data))
-}
-
-const loadData = (key) => {
-    const data = JSON.parse(localStorage.getItem(key))
-    if(!data) return null;
-
-    const now = new Date().getTime();
-    if(now > data.expirationDate) {
-        localStorage.removeItem(key);
-        return null;
+  async function saveData(key, value) {
+    try {
+      const docRef = await addDoc(collection(db, "taches"), {
+        key: key,
+        value: value
+      });
+      console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
     }
-    return data.value
-}
+  }
 
+  async function loadData(key) {
+    const q = query(collection(db, "taches"), where("key", "==", key));
+    const querySnapshot = await getDocs(q);
+    let value = null;
+    querySnapshot.forEach((doc) => {
+      value = doc.data().value;
+    });
+    return value;
+  }
   // Fonction pour charger l'état initial des cellules à partir de localStorage
 
-function loadInitialState() {
-    document.querySelectorAll('select').forEach(select => {
-      const key = select.id;
-      const cell = select.parentElement;
-      const p = cell.querySelector('p');
-  
-      const value = loadData(key);  // loadData est votre fonction pour récupérer des données de localStorage
-      if (value !== null) {
-        // Les données existent et n'ont pas expiré
-        select.value = value;
-        select.style.display = 'none';
-        p.textContent = value;
-        p.style.display = 'block';
-        cell.style.backgroundColor = '#32CD32';
-      }
-    });
+  function loadInitialState() {
+ 
   }
+  
   
   // Charger l'état initial lorsque la page est chargée
   window.addEventListener('DOMContentLoaded', (event) => {
@@ -133,22 +153,7 @@ function isSunday() {
   
   // Fonction pour vider les données du dimanche
   function clearSundayTasks() {
-    if (isSunday()&& isAfterNextSunday()) {
-      document.querySelectorAll('[name*="dimanche"]').forEach(select => {
-        const key = select.id;
-        localStorage.removeItem(key);  // Supprimer de localStorage
-        select.value = '';  // Réinitialiser le select
-        const cell = select.parentElement;
-        cell.style.backgroundColor = '';  // Réinitialiser le fond
-        const p = cell.querySelector('p');
-        p.style.display = 'none';  // Cacher le texte
-        p.textContent = '';  // Réinitialiser le texte
-        select.style.display = 'block';  // Afficher le select
-      });
-    }
+   
   }
-  
-  // Vérifier toutes les minutes
-  setInterval(clearSundayTasks, 60 * 1000);
 
-console.log(Date(1695569432152));
+  
